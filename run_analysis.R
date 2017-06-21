@@ -1,8 +1,10 @@
 ## Download and extract data folder
-download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip", "data/Datasets.zip")
+download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip", 
+              "data/Datasets.zip")
 zipF<- "data/Datasets.zip"
 outDir<-"data"
 unzip(zipF,exdir=outDir)
+rm(outDir, zipF)
 
 ## Read testing and training data sets and rowbind them to form one data frame
 library(readr)
@@ -68,6 +70,7 @@ df <- df %>%
 names(df) <- sub("[0-9]+ ", "", names(df))
 names(df) <- gsub("-", "\\.", names(df))
 names(df) <- gsub("\\(\\)", "", names(df))
+names(df) <- gsub("BodyBody", "Body", names(df))
 
 ## Insert column with subject ID numbers
 train_ID <- read_lines("data/UCI HAR Dataset/train/subject_train.txt")
